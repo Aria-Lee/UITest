@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:orientation="horizontal"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content">
+
+    <TextView
+            android:text="TextView"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" android:id="@+id/tv_child"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:paddingStart="16dp" android:textSize="18sp" android:paddingTop="8dp"/>
+    <com.raise.a19sportuitest.MyViewPager
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/tv_child"
+            android:id="@+id/vpg_child" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0">
+    </com.raise.a19sportuitest.MyViewPager>
+    <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/vpg_child"
+            app:layout_constraintStart_toStartOf="@+id/vpg_child"
+            app:layout_constraintEnd_toEndOf="@+id/vpg_child"
+            android:orientation="horizontal" android:id="@+id/rdtgp" android:layout_marginBottom="8dp">
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/rdt1" android:layout_weight="1"
+                android:button="@drawable/sp_banner_guide_node_ckecked_false" android:buttonTint="@color/vpg_guide"/>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/rdt2" android:layout_weight="1"
+                android:button="@drawable/sp_banner_guide_node_ckecked_false" android:layout_marginStart="8dp"
+                android:buttonTint="@color/vpg_guide"/>
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>
