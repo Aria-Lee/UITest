@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.core.view.get
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,15 +33,22 @@ class MainActivity : AppCompatActivity() {
         setTab()
         setExpandableList()
 
-        btn.setOnClickListener {
-            for (i in 0 until adapter.groupCount) {
-                exlv.collapseGroup(i)
-            }
+//        chk.setOnCheckedChangeListener { buttonView, isChecked ->
+//            setCollpaseOrExpand()
+//        }
+
+        fab_to_top.setOnClickListener {
+            exlv.setSelectedGroup(0)
         }
     }
 
     private fun setExpandableList() {
         exlv.setAdapter(adapter)
+        adapter.setClickListener(object : ExAdapter.ClickListener{
+            override fun controllAll() {
+                setCollpaseOrExpand()
+            }
+        })
         adapter.updateData()
 
         exlv.setOnScrollListener(object : AbsListView.OnScrollListener {
@@ -48,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+            @SuppressLint("RestrictedApi")
             override fun onScroll(
                 view: AbsListView?,
                 firstVisibleItem: Int,
@@ -58,9 +67,17 @@ class MainActivity : AppCompatActivity() {
                 if (lastFirstVisibleItem <= firstVisibleItem && totalItemCount - firstVisibleItem < 20) {
                     println("************** totalItemCount $totalItemCount  firstVisibleItem $firstVisibleItem")
                     adapter.updateData()
-                    for (i in 0 until adapter.groupCount) {
-                        exlv.expandGroup(i)
-                    }
+                    setCollpaseOrExpand()
+//                    for (i in 0 until adapter.groupCount) {
+//                        exlv.expandGroup(i)
+//                    }
+                }
+
+                if (fab_to_top.visibility == View.GONE && firstVisibleItem > 20){
+                    fab_to_top.visibility = View.VISIBLE
+                }
+                else if (fab_to_top.visibility == View.VISIBLE && firstVisibleItem < 20){
+                    fab_to_top.visibility = View.GONE
                 }
             }
 
@@ -69,6 +86,17 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until adapter.groupCount) {
             exlv.expandGroup(i)
         }
+    }
+
+    fun setCollpaseOrExpand() {
+        if (!exlv.isGroupExpanded(0))
+            for (i in 1 until adapter.groupCount) {
+                exlv.collapseGroup(i)
+            }
+        else
+            for (i in 1 until adapter.groupCount) {
+                exlv.expandGroup(i)
+            }
     }
 
     private fun setTab() {

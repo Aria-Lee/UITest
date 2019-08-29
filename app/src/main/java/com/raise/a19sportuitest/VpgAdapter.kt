@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_vpg.view.*
 import kotlin.random.Random
 
 
-class VpgAdapter(val context: Context, val itemCount: Int) : PagerAdapter() {
+class VpgAdapter(val context: Context) : PagerAdapter() {
     override fun isViewFromObject(v: View, any: Any): Boolean {
         return v == any
     }
@@ -24,15 +24,11 @@ class VpgAdapter(val context: Context, val itemCount: Int) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val rdm = Random
-        val view = LayoutInflater.from(context).inflate(R.layout.item_vpg, container, false) as LinearLayout
-        for(i in 0..itemCount){
-            val item = View(container.context)
-            item.setBackgroundColor(Color.argb(255, 255, rdm.nextInt(256), rdm.nextInt(256)))
-            view.addView(item, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500))
-        }
-        view.requestLayout()
-        container.addView(view)
-        return view
+        val item = View(container.context)
+        item.setBackgroundColor(Color.argb(255, 255, rdm.nextInt(256), rdm.nextInt(256)))
+        container.addView(item, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        container.requestLayout()
+        return item
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
