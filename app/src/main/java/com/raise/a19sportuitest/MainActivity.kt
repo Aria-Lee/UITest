@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var tv: TextView
     var selectedTab: View? = null
-    val adapter = ExAdapter()
+    lateinit var adapter: ExAdapter
     var lastFirstVisibleItem = 0
 
     @SuppressLint("ResourceAsColor", "ClickableViewAccessibility")
@@ -30,15 +30,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         tv = TextView(this)
 
+        adapter = ExAdapter(supportFragmentManager)
         setTab()
         setExpandableList()
-
 //        chk.setOnCheckedChangeListener { buttonView, isChecked ->
 //            setCollpaseOrExpand()
 //        }
 
         fab_to_top.setOnClickListener {
             exlv.setSelectedGroup(0)
+
         }
     }
 

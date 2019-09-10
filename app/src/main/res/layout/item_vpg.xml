@@ -14,23 +14,5 @@
                                           android:background="@android:color/black">
 
     </androidx.viewpager.widget.ViewPager>
-    <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/vpg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="horizontal" android:id="@+id/rdtgp" app:layout_constraintHorizontal_bias="0.5">
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/rdt1" android:layout_weight="1"
-                android:button="@drawable/sp_banner_guide_node_ckecked_false"
-                android:buttonTint="@color/vpg_guide"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/rdt2" android:layout_weight="1"
-                android:button="@drawable/sp_banner_guide_node_ckecked_false" android:layout_marginStart="8dp"
-                android:buttonTint="@color/vpg_guide"/>
-    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

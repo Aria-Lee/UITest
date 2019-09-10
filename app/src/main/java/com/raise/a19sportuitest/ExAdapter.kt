@@ -6,13 +6,17 @@ import android.view.ViewGroup
 
 import android.view.LayoutInflater
 import android.widget.*
+
+import androidx.core.view.get
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.child.view.*
 import kotlinx.android.synthetic.main.group.view.*
 import kotlinx.android.synthetic.main.item_vpg.view.*
 import kotlin.random.Random
 
-class ExAdapter() :
+class ExAdapter(var fm: FragmentManager) :
     BaseExpandableListAdapter() {
 
 
@@ -116,53 +120,33 @@ class ExAdapter() :
                 .inflate(R.layout.child, parent, false)
             itemHolder = ChildViewHolder()
             itemHolder.title = view!!.tv_child
-            itemHolder.vpgContainer = view.lv_vpg_container
-            itemHolder.child = view
+            itemHolder.vpg = view.vpg_child
+            itemHolder.rdt1 = view.rdt1
+            itemHolder.rdt2 = view.rdt2
+//            itemHolder.vpg.adapter = VpgAdapter(parent!!.context, Random.nextInt(1, 3))
+            itemHolder.vpg.adapter = FragmentPagerAdapter(fm, mutableListOf(MyFragment(), MyFragment()))
+            itemHolder.vpg.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                }
+
+                override fun onPageSelected(position: Int) {
+                    when(position){
+                        0 -> itemHolder.rdt1.isChecked = true
+                        1 -> itemHolder.rdt2.isChecked = true
+                    }
+                }
+
+            })
             view.tag = itemHolder
         } else {
             itemHolder = view.tag as ChildViewHolder
-            itemHolder.vpgContainer.removeAllViews()
         }
 
-//        if (groupPosition == 0) {
-//            itemHolder.child.visibility = View.GONE
-//        } else {
-//            itemHolder.child.visibility = View.VISIBLE
-            itemHolder.title.text = "Child $groupPosition"
-            val count = Random.nextInt(1, 3)
-            for (i in 0..count) {
-                val item = LayoutInflater.from(parent!!.context).inflate(
-                    R.layout.item_vpg,
-                    itemHolder.vpgContainer,
-                    false
-                ) as View
-                val rdm = Random
-                item.vpg.adapter = VpgAdapter(parent!!.context)
-//                item.vpg.setBackgroundColor(Color.argb(255, 255, rdm.nextInt(256), rdm.nextInt(256)))
-
-                item.rdt1.isChecked = true
-                item.vpg.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                    override fun onPageScrollStateChanged(state: Int) {
-                    }
-
-                    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    }
-
-                    override fun onPageSelected(position: Int) {
-                        when (position) {
-                            0 -> item.rdt1.isChecked = true
-                            1 -> item.rdt2.isChecked = true
-                        }
-                    }
-
-                })
-                itemHolder.vpgContainer.addView(
-                    item,
-                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                )
-                itemHolder.vpgContainer.requestLayout()
-            }
-//        }
+        itemHolder.title.text = "Child $groupPosition"
+        itemHolder.rdt1.isChecked = true
         return view
     }
 
@@ -180,6 +164,9 @@ class ExAdapter() :
     class ChildViewHolder {
         lateinit var title: TextView
         lateinit var vpgContainer: LinearLayout
+        lateinit var vpg: ViewPager
+        lateinit var rdt1: RadioButton
+        lateinit var rdt2: RadioButton
         lateinit var child: View
     }
 
