@@ -22,7 +22,7 @@ class VpgAdapter(val context: Context) : PagerAdapter() {
     }
 
     override fun getCount(): Int {
-        return 2
+        return 1
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -43,12 +43,11 @@ class FragmentPagerAdapter(fragmentManager: FragmentManager, var fragmentList: M
     FragmentPagerAdapter(fragmentManager) {
 
     private var isUpdate = false
-    public var needOverrideItemId = false
 
-    override fun getItemId(position: Int): Long {
-        return if(needOverrideItemId) (this.hashCode()*10+position).toLong() else super.getItemId(position)
-//        return super.getItemId(position)
-    }
+//    override fun getItemId(position: Int): Long {
+//        return if(needOverrideItemId) (this.hashCode()*10+position).toLong() else super.getItemId(position)
+////        return super.getItemId(position)
+//    }
 
     override fun getItem(position: Int): Fragment {
         println("****************** adapter ${this.hashCode()} getItem ${fragmentList[position].hashCode()}")
