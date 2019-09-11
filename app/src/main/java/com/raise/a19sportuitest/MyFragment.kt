@@ -15,16 +15,18 @@ class MyFragment: Fragment() {
         val view = inflater.inflate(R.layout.frag, container, false)
         val rdm = Random
         view.setBackgroundColor(Color.argb(255, 255, rdm.nextInt(256), rdm.nextInt(256)))
+        println("****************** fragment ${this.hashCode()} onCreateView")
+
         return view
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        println("****************** ${this.hashCode()}")
+        println("****************** fragment ${this.hashCode()} onAttach")
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        println("****************** ${this.hashCode()}  isVisibleToUser $isVisibleToUser")
+        println("****************** fragment ${this.hashCode()}  isVisibleToUser $isVisibleToUser")
 
         super.setUserVisibleHint(isVisibleToUser)
     }

@@ -39,31 +39,37 @@ class VpgAdapter(val context: Context) : PagerAdapter() {
     }
 }
 
-class FragmentPagerAdapter(fragmentManager: FragmentManager, var fragmentList: MutableList<Fragment>
-) :
+class FragmentPagerAdapter(fragmentManager: FragmentManager, var fragmentList: MutableList<Fragment>) :
     FragmentPagerAdapter(fragmentManager) {
 
     private var isUpdate = false
+    public var needOverrideItemId = false
+
+    override fun getItemId(position: Int): Long {
+        return if(needOverrideItemId) (this.hashCode()*10+position).toLong() else super.getItemId(position)
+//        return super.getItemId(position)
+    }
 
     override fun getItem(position: Int): Fragment {
-        println("****************** ${this.hashCode()} getItem ${fragmentList[position].hashCode()}")
+        println("****************** adapter ${this.hashCode()} getItem ${fragmentList[position].hashCode()}")
         return fragmentList[position]
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        println("****************** ${this.hashCode()} isViewFromObject ${super.isViewFromObject(view, `object`)}")
+        println("****************** adapter ${this.hashCode()} isViewFromObject ${super.isViewFromObject(view, `object`)}")
         return super.isViewFromObject(view, `object`)
     }
 
 
     override fun getCount(): Int {
-        println("****************** ${this.hashCode()} getCount ${fragmentList.size}")
+        println("****************** adapter ${this.hashCode()} getCount ${fragmentList.size}")
 
         return fragmentList.size
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        println("****************** ${this.hashCode()} instantiateItem ${fragmentList[position].hashCode()}")
+//        println("****************** adapter ${this.hashCode()} instantiateItem ${fragmentList[position].hashCode()}")
+        println("****************** adapter ${this.hashCode()} instantiateItem ${fragmentList[position].tag}")
         return super.instantiateItem(container, position)
     }
 //    override fun getPageTitle(position: Int): CharSequence? {
@@ -80,7 +86,7 @@ class FragmentPagerAdapter(fragmentManager: FragmentManager, var fragmentList: M
         isUpdate = true
         fragmentList = list
         this.notifyDataSetChanged()
-//        println("****************** ${this.hashCode()} notifyDataSetChanged")
+//        println("****************** adapter ${this.hashCode()} notifyDataSetChanged")
         isUpdate = false
     }
 }

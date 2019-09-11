@@ -124,7 +124,10 @@ class ExAdapter(var fm: FragmentManager) :
             itemHolder.rdt1 = view.rdt1
             itemHolder.rdt2 = view.rdt2
 //            itemHolder.vpg.adapter = VpgAdapter(parent!!.context, Random.nextInt(1, 3))
-            itemHolder.vpg.adapter = FragmentPagerAdapter(fm, mutableListOf(MyFragment(), MyFragment()))
+//            frag1.ta
+            val adapter = FragmentPagerAdapter(fm, mutableListOf(MyFragment(), MyFragment()))
+            itemHolder.vpg.adapter = adapter
+            adapter.needOverrideItemId = true
             itemHolder.vpg.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
                 override fun onPageScrollStateChanged(state: Int) {
                 }
